@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width" name="viewport">
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+    <link href="{% static 'todolist/css/style.css' %}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<header>
+    <div id="logo">
+        <a class="logo" href="{% url 'index' %}">To-Do-List</a>
+    </div>
+</header>
+<main>
+    {% block content %}{% endblock %}
+</main>
+</body>
+</html>

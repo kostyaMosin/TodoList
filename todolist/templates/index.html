@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %} To-Do-List {% endblock %}
+
+{% block content %}
+<section id="todobox">
+    <form action="" method="post">{% csrf_token %}
+        <div id="formtask">
+            <div id="formselect">
+                <select name="priority">
+                    <option value="1">Low</option>
+                    <option value="2">Medium</option>
+                    <option value="3">High</option>
+                </select>
+            </div>
+            <input name="content" placeholder="Enter the task here" type="text">
+            <div id="formbutton">
+                <input type="submit" value="Add">
+            </div>
+        </div>
+        {% for field, errors in form.errors.items %}
+        {% for error in errors %}
+        <p class="boxtextcenter" style="color: red">{{ field }}: {{ error }}</p>
+        {% endfor %}
+        {% endfor %}
+    </form>
+    <p class="boxsortbar">
+        Sorted your task list by priority:
+        <a class="green" href="{% url 'sort' priority='1' %}"> Low </a>
+        <a class="yellow" href="{% url 'sort' priority='2' %}"> Medium </a>
+        <a class="red" href="{% url 'sort' priority='3' %}"> High </a>
+        <br>
+    </p>
+    {% for task in data %}
+    <div class="boxtask">
+        {% if task.priority == '1' %}
+        <div class="taskborder-green">
+            {% elif task.priority == '2' %}
+            <div class="taskborder-yellow">
+                {% elif task.priority == '3' %}
+                <div class="taskborder-red">
+                    {% endif %}
+                    <form method="post" action="{% url 'complete' task.pk %}">
+                        {% if task.complete %}
+                        <p class="strike">
+                            {% else %}
+                        <p>
+                            {% endif %}
+                            {{ task.content }}
+                        </p>
+                    </form>
+                </div>
+                <div class="float-left">
+                    {% if task.complete %}
+                    {% else %}
+                    <form class="float-left" method="post" action="{% url 'complete' task.pk %}">{% csrf_token %}
+                        <input name="button" type="submit" value="complete">
+                    </form>
+                    <form class="float-left" method="get" action="{% url 'edit' task.pk %}">{% csrf_token %}
+                        <input name="button" type="submit" value="edit">
+                    </form>
+                    {% endif %}
+                    <form class="float-left" method="post" action="{% url 'delete' task.pk %}">{% csrf_token %}
+                        <input name="button" type="submit" value="delete">
+                    </form>
+                </div>
+                <form action="{% url 'move' task.pk %}" class="float-right" method="post">{% csrf_token %}
+                    <input name="button" type="submit" value="Up">
+                    <input name="button" type="submit" value="Down">
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}

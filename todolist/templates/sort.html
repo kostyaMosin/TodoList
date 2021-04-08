@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %} Sorted To-Do-List {% endblock %}
+
+{% block content %}
+<section id="todobox">
+    <p class="boxsortbar">
+        Sorted your task list by priority:
+        <a class="green" href="{% url 'sort' priority='1' %}"> Low </a>
+        <a class="yellow" href="{% url 'sort' priority='2' %}"> Medium </a>
+        <a class="red" href="{% url 'sort' priority='3' %}"> High </a>
+        <br>
+    </p>
+    {% for task in data %}
+    <div class="boxtask">
+        {% if task.priority == '1' %}
+        <div class="taskborder-green">
+            {% elif task.priority == '2' %}
+            <div class="taskborder-yellow">
+                {% elif task.priority == '3' %}
+                <div class="taskborder-red">
+                    {% endif %}
+                    {% if task.complete %}
+                    <p class="strike">
+                        {% else %}
+                    <p>
+                        {% endif %}
+                        <a href="{% url 'complete' task.pk %}">{{ task.content }}</a>
+                    </p>
+                </div>
+                <div class="float-left">
+                    <button><a href="{% url 'edit' task.pk %}">edit</a></button>
+                    <button><a href="{% url 'delete' task.pk %}">delete</a></button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
