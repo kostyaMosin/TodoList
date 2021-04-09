@@ -143,11 +143,6 @@ section .red {
     max-width: 600px;
     margin: 10px auto;
 }
-#formslug {
-    display: table;
-    max-width: 600px;
-    margin: 0 auto;
-}
 #formtask #formbutton {
     display: table-cell;
     width: 1px;
@@ -162,7 +157,7 @@ section .red {
 }
 #formtask select {
     display: table-cell;
-    width: 180px;
+    width: 90px;
     height: 56px;
     padding: 10px 16px;
     font: 17px lato,arial;
