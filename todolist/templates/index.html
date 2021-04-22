@@ -7,21 +7,18 @@
     <form action="" method="post">{% csrf_token %}
         <div id="formtask">
             <div id="formselect">
-                <select name="priority">
-                    <option value="1">Low</option>
-                    <option value="2">Medium</option>
-                    <option value="3">High</option>
-                </select>
+                {{ form.priority }}
             </div>
-            <input name="content" placeholder="Enter the task here" type="text">
+            <input name="content"
+                   placeholder="Enter the task here"
+                   type="text"
+                   value="{% if form.content.value %}{{ form.content.value }}{% endif %}">
             <div id="formbutton">
                 <input type="submit" value="Add">
             </div>
         </div>
-        {% for field, errors in form.errors.items %}
-        {% for error in errors %}
-        <p class="boxtextcenter" style="color: red">{{ field }}: {{ error }}</p>
-        {% endfor %}
+        {% for error in form.content.errors %}
+        <p class="boxtextcenter" style="color: red">{{ error }}</p>
         {% endfor %}
     </form>
     <p class="boxsortbar">
