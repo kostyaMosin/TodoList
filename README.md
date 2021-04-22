@@ -44,4 +44,4 @@ Kostya Mosin <kostyaMosin93@gmail.com>
 References
 ----------
 
-- First accreditation project at the school of programming [TeachMeSkills](https://teachmeskills.by/)
+- Second accreditation project at the school of programming [TeachMeSkills](https://teachmeskills.by/)
