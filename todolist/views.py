@@ -19,30 +19,25 @@ def view_create_task_and_todo_list(request):
             data = {'content': cd['content'], 'priority': cd['priority'], 'rating': rating_generator()}
             ToDoTask.objects.create(**data)
             return redirect('index')
-        else:
-            context = {
-                'form': form,
-                'data': ToDoTask.objects.filter().order_by('rating'),
-            }
-            return render(request, 'index.html', context)
+        context = {
+            'form': form,
+            'data': ToDoTask.objects.filter().order_by('rating'),
+        }
+        return render(request, 'index.html', context)
 
 
 def view_edit_task(request, pk):
+    task = get_object_or_404(ToDoTask, id=pk)
     if request.method == 'POST':
         form = TaskForm(request.POST)
-        task = get_object_or_404(ToDoTask, id=pk)
         if form.is_valid():
             cd = form.cleaned_data
             task.content = cd['content']
             task.priority = cd['priority']
             task.save()
             return redirect('index')
-        else:
-            task = get_object_or_404(ToDoTask, id=pk)
-            return render(request, 'edit.html', {'form': form, 'task': task})
-    else:
-        task = get_object_or_404(ToDoTask, id=pk)
-        return render(request, 'edit.html', {'task': task})
+        return render(request, 'edit.html', {'form': form, 'task': task})
+    return render(request, 'edit.html', {'form': TaskForm(), 'task': task})
 
 
 def view_delete_task(request, pk):

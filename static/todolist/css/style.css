@@ -157,7 +157,7 @@ section .red {
 }
 #formtask select {
     display: table-cell;
-    width: 90px;
+    width: 120px;
     height: 56px;
     padding: 10px 16px;
     font: 17px lato,arial;
